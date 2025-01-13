@@ -1,15 +1,16 @@
 import { nanoid } from "nanoid";
 import url from "../models/Url.js";
 
-async function handelGenNewShortUrl(req, res) {
+async function handleGenNewShortUrl(req, res) {
   try {
     const redirectUrl = req.body.redirectUrl;
-
     const ShortUrl = nanoid(8);
 
-    if (!redirectUrl) {
-      return res.status(400).json({ error: "Please Enter the url" });
-    }
+    console.log(redirectUrl);
+
+    // if (!redirectUrl) {
+    //   return res.status(400).json({ error: "Please Enter the url" });
+    // }
 
     const newUrlData = new url({
       shortId: ShortUrl,
@@ -17,6 +18,8 @@ async function handelGenNewShortUrl(req, res) {
     });
 
     const newData = await newUrlData.save();
+
+    return res.render("home", newData.shortId);
     res
       .status(201)
       .json({ msg: "data has been created", data: newData.shortId });
@@ -51,4 +54,4 @@ async function redirectTOurl(req, res) {
   }
 }
 
-export { handelGenNewShortUrl, redirectTOurl };
+export { handleGenNewShortUrl, redirectTOurl };

@@ -1,12 +1,15 @@
 import express, { json } from "express";
+import path from "path";
 const port = 7070;
 const app = express();
+
 import router from "./routes/urlRouter.js";
+import staticRoute from "./routes/StaticRoutes.js";
 import ConnectTOmongodbLocal from "./dbconnection/LocalDb.js";
 
 ConnectTOmongodbLocal("mongodb://localhost:27017/urlShortner")
-  .then((data) => {
-    console.log(console.log(`mongodbConntected`));
+  .then(() => {
+    console.log(`mongodbConntected`);
   })
   .catch((error) => {
     console.log("some error");
@@ -15,7 +18,12 @@ ConnectTOmongodbLocal("mongodb://localhost:27017/urlShortner")
 // middleware
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"));
 app.use("/url", router);
+app.use("/", staticRoute);
+
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });
