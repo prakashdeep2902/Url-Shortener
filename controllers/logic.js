@@ -15,7 +15,7 @@ async function handleGenNewShortUrl(req, res) {
     });
 
     const newData = await newUrlData.save();
-
+    console.log(newData);
     return res.render("home.ejs", { id: newData.shortId });
   } catch (error) {
     res
@@ -39,7 +39,6 @@ async function redirectTOurl(req, res) {
       }
     );
 
-    console.log("entry is", entry);
     res.redirect(entry.redirectUrl);
   } catch (error) {
     res

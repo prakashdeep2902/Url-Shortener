@@ -80,7 +80,7 @@
       .alldata {
         display: flex;
         flex-direction: column;
-        width: auto;
+        width: 90%;
         margin: auto;
         margin-top: 2rem;
         height: 11rem;
@@ -153,14 +153,19 @@
     <div class="AllSHortCode">
       <div class="FormFIv">
         <form method="post" action="/url">
-          <label for="">Enter Your Orginal Url</label>
-          <input type="text" name="redirectUrl" placeholder="www.example.com" />
+          <label for="redirectUrl">Enter Your Original URL</label>
+          <input
+            type="text"
+            name="redirectUrl"
+            id="redirectUrl"
+            placeholder="https://www.example.com"
+          />
           <button class="SubmitBtn" type="submit">Get shortUrl</button>
         </form>
       </div>
 
       <div class="alldata">
-        <h2>Shorts-Urls</h2>
+        <h2>Short URLs</h2>
         <% if (locals.dbData && dbData.length > 0) { %>
         <table border="1" cellspacing="0" cellpadding="5">
           <thead>
@@ -168,6 +173,7 @@
               <th>#</th>
               <th>Short ID</th>
               <th>Redirect URL</th>
+              <th>Full URL</th>
             </tr>
           </thead>
           <tbody>
@@ -176,12 +182,20 @@
               <td><%= index + 1 %></td>
               <td><%= element.shortId %></td>
               <td><%= element.redirectUrl %></td>
+              <td>
+                <a href="http://localhost:7070/url/<%= element.shortId %>">
+                  http://localhost:7070/url/<%= element.shortId %>
+                </a>
+              </td>
             </tr>
             <% }) %>
           </tbody>
         </table>
-        <% } else { %>
-        <p>No data available.</p>
+        <% }%><% if (locals.id) { %>
+        <p>Your generated URL is:</p>
+        <a href="http://localhost:7070/url/<%= id %>">
+          http://localhost:7070/url/<%= id %>
+        </a>
         <% } %>
       </div>
     </div>

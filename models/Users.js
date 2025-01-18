@@ -6,8 +6,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-
-    UserPass: {
+    UserMobileNo: {
+      type: Number,
+      require: true,
+      unique: true,
+    },
+    UserEmail: {
       type: String,
       require: true,
       unique: true,
