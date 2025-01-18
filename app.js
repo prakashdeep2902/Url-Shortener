@@ -7,6 +7,9 @@ import router from "./routes/urlRouter.js";
 import staticRoute from "./routes/StaticRoutes.js";
 import user from "./routes/user.js";
 import ConnectTOmongodbLocal from "./dbconnection/LocalDb.js";
+import { LogdinUserOnly } from "./middlewares/auth.js";
+
+import cookieParser from "cookie-parser";
 
 ConnectTOmongodbLocal("mongodb://localhost:27017/urlShortner")
   .then(() => {
@@ -17,12 +20,14 @@ ConnectTOmongodbLocal("mongodb://localhost:27017/urlShortner")
   });
 
 // middleware
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
-app.use("/url", router);
+app.use(cookieParser());
+
+// routers
+app.use("/url", LogdinUserOnly, router);
 app.use("/", staticRoute);
 app.use("/user", user);
 

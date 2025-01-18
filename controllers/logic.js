@@ -12,10 +12,12 @@ async function handleGenNewShortUrl(req, res) {
     const newUrlData = new url({
       shortId: ShortUrl,
       redirectUrl: redirectUrl,
+      visitHistory: [],
+      createdBy: req.user._id,
     });
 
     const newData = await newUrlData.save();
-    console.log(newData);
+
     return res.render("home.ejs", { id: newData.shortId });
   } catch (error) {
     res

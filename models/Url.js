@@ -11,11 +11,11 @@ const UrlModel = new mongoose.Schema(
       type: String,
       require: true,
     },
-    visitHistory: [
-      {
-        timestamp: { type: String },
-      },
-    ],
+    visitHistory: [{ timestamp: { type: String } }],
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamp: true }
 );
