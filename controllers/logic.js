@@ -4,14 +4,11 @@ import url from "../models/Url.js";
 async function handleGenNewShortUrl(req, res) {
   try {
     const redirectUrl = req.body.redirectUrl;
+    if (!redirectUrl) {
+      return res.status(400).json({ error: "redirection url is requierd" });
+    }
+
     const ShortUrl = nanoid(8);
-
-    console.log(redirectUrl);
-
-    // if (!redirectUrl) {
-    //   return res.status(400).json({ error: "Please Enter the url" });
-    // }
-
     const newUrlData = new url({
       shortId: ShortUrl,
       redirectUrl: redirectUrl,
@@ -19,10 +16,7 @@ async function handleGenNewShortUrl(req, res) {
 
     const newData = await newUrlData.save();
 
-    return res.render("home", newData.shortId);
-    res
-      .status(201)
-      .json({ msg: "data has been created", data: newData.shortId });
+    return res.render("home.ejs", { id: newData.shortId });
   } catch (error) {
     res
       .status(500)

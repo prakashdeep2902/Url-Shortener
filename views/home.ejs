@@ -78,6 +78,53 @@
         background-color: #45a049;
       }
 
+      .alldata {
+        margin: 0 auto;
+        overflow-y: scroll;
+      }
+
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+
+      table {
+        width: 80%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        position: sticky;
+        top: 0;
+        background-color: #f4f4f4; /* Sticky header background color */
+        z-index: 1;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        font-weight: bold;
+        background-color: #f4f4f4;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      p {
+        text-align: center;
+        color: #666;
+      }
+
       @media (max-width: 480px) {
         .AllSHortCode {
           padding: 15px;
@@ -99,9 +146,35 @@
       <div class="FormFIv">
         <form method="post" action="/url">
           <label for="">Enter Your Orginal Url</label>
-          <input type="text" name="orginalUrl" placeholder="www.example.com" />
-          <button class="SubmitBtn">Get shortUrl</button>
+          <input type="text" name="redirectUrl" placeholder="www.example.com" />
+          <button class="SubmitBtn" type="submit">Get shortUrl</button>
         </form>
+      </div>
+
+      <div class="alldata">
+        <h2>Shorts-Urls</h2>
+        <% if (locals.dbData && dbData.length > 0) { %>
+        <table border="1" cellspacing="0" cellpadding="5">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Short ID</th>
+              <th>Redirect URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% dbData.forEach((element, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= element.shortId %></td>
+              <td><%= element.redirectUrl %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <p>No data available.</p>
+        <% } %>
       </div>
     </div>
   </body>

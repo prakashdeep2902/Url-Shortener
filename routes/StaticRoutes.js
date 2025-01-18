@@ -5,12 +5,8 @@ const router = express.Router();
 router.get("/home", async (req, res) => {
   try {
     const dbData = await url.find({});
-
-    console.log("dbData");
-    console.log(dbData);
-
     res.render("home", {
-      dbData,
+      dbData: dbData,
     });
   } catch (error) {
     res
