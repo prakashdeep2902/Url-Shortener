@@ -7,7 +7,7 @@ import router from "./routes/urlRouter.js";
 import staticRoute from "./routes/StaticRoutes.js";
 import user from "./routes/user.js";
 import ConnectTOmongodbLocal from "./dbconnection/LocalDb.js";
-import { LogdinUserOnly } from "./middlewares/auth.js";
+import { checkAuth, LogdinUserOnly } from "./middlewares/auth.js";
 
 import cookieParser from "cookie-parser";
 
@@ -28,7 +28,7 @@ app.use(cookieParser());
 
 // routers
 app.use("/url", LogdinUserOnly, router);
-app.use("/", staticRoute);
+app.use("/", checkAuth, staticRoute);
 app.use("/user", user);
 
 app.listen(port, () => {

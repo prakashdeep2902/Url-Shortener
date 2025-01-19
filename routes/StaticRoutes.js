@@ -1,11 +1,10 @@
 import express from "express";
 import url from "../models/Url.js";
-
 const router = express.Router();
-
 router.get("/home", async (req, res) => {
   try {
-    const dbData = await url.find({});
+    if (!req.user) return res.redirect("/login");
+    const dbData = await url.find({ createdBy: req.user._id });
     res.render("home", {
       dbData: dbData,
     });

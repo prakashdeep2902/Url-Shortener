@@ -1,5 +1,4 @@
 import Users from "../models/Users.js";
-import { v4 as uuidv4 } from "uuid";
 import { setUsers, getUsers } from "../utils/auth.js";
 
 // Handle Signup
@@ -63,11 +62,9 @@ async function handleLogin(req, res) {
       });
     }
 
-    // Successful login
-    const sessionId = uuidv4();
-    setUsers(sessionId, user);
-    res.cookie("uuid", sessionId);
-    return res.status(200).redirect("/home");
+    const Token = setUsers(user);
+    res.cookie("uuid", Token);
+    return res.status(200).render("home");
   } catch (error) {
     console.error("Error during login:", error);
     return res.status(500).render("login", {
